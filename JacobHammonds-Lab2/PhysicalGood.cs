@@ -26,6 +26,6 @@ public abstract class PhysicalGood : StockItem
     
     public override string Describe()
     {
-    return $"{base.Describe()}, Weight: {weightPounds} lbs, Shipping Cost: {ShippingCost():C}";
+    return $"{base.Describe()}, Weight: {weightPounds} lbs";
     }
 }

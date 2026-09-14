@@ -1,1 +1,5 @@
-﻿Console.WriteLine("Hello, World!");
+﻿using System;
+static void Show(IReportable r)
+{
+    Console.WriteLine(r.ReportLine());
+}

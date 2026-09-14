@@ -21,7 +21,7 @@ public class DurableGood : PhysicalGood
 
     public override decimal HandlingFee()
     {
-        return 0.0m;
+        return ShippingCost();
     }
 
     public override string Describe()

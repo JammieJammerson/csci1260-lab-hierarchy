@@ -16,7 +16,7 @@ public class PerishableGood : PhysicalGood, IDisposable
 
     public bool IsOnSale : IDiscountable
     {
-        get { return shelfLifeDays < 5; }
+        get { return shelfLifeDays > 3; }
     }
 
     public PerishableGood(string sku, string name, decimal unitPrice, int quantityOnHand, double weightPounds, int shelfLifeDays) : base(sku, name, unitPrice, quantityOnHand, weightPounds)
@@ -31,14 +31,14 @@ public class PerishableGood : PhysicalGood, IDisposable
 
     public override decimal HandlingFee()
     {
-        return (decimal)WeightPounds * SurgeFee.Value;
+        return ShippingCost() * SurgeFee.Value;
     }
 
     public decimal SalePrice() : IDiscountable
     {
     if (IsOnSale)
     {
-        return UnitPrice * 0.8m; // 20% discount
+        return UnitPrice * 0.7m;
     }
         return UnitPrice;
     }

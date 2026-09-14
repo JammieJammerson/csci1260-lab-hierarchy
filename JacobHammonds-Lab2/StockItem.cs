@@ -66,7 +66,7 @@ public abstract class StockItem : IReportable
 
     public string MovementLines()
     {
-        return StockMovement
+        return StockMovement.Describe(transactionHistory);
     }
 
     public virtual string Describe()
@@ -81,7 +81,7 @@ public abstract class StockItem : IReportable
 
     public override string ToString()
     {
-        
+        return Describe();
     }
 
 }

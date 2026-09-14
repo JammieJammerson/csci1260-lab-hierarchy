@@ -34,7 +34,10 @@ public class Shop : IReportable
 
     public decimal SalesValue()
     {
-        return items.Sum(item => item.SalesValue);
+        if (item is IDiscountable d && d.IsOnSale)
+            total += (d.SalePrice() + item.HandlingFee()) * item.QuantityOnHand;
+        else
+            total += item.ExtendedValue();
     }
 
     public int SignedCount()
@@ -49,7 +52,19 @@ public class Shop : IReportable
 
     public void SortByValue()
     {
-        items.Sort((item1, item2) => item1.Price.CompareTo(item2.Price));
+        for (int i = 0; i < items.Count - 1; i++)
+        {
+            int best = i;
+            for (int j = i + 1; j < items.Count; j++)
+                if (Beats(items[j], items[best]))
+                    best = j;
+            if (best != i)
+            {
+                StockItem hold = items[i];
+                items[i] = items[best];
+                items[best] = hold;
+            }
+        }
     }
 
     static private bool Beats(StockItem a, StockItem b) : IReportable

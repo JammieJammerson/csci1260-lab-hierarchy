@@ -20,16 +20,26 @@ public class ServiceItem : StockItem, IDiscountable
 
     public override decimal HandlingFee()
     {
-        return 0.00m;
+        if (laborHours > 2)
+        {
+            IsOnSale = true;
+        }
     }
 
     public decimal SalePrice() : IDiscountable
     {
-        return 0.10m;
+        if (IsOnSale)
+        {
+            return UnitPrice * 0.85m;
+        }
+        else
+        {
+            return UnitPrice;
+        }
     }
 
     public override string Describe()
     {
-        return $"{base.Describe()}, Labor Hours: {laborHours}, Sale Price: {SalePrice():C}";
+        return $"{base.Describe()}, Labor Hours: {laborHours}";
     }
 }
