@@ -69,7 +69,9 @@ public class Shop : IReportable
 
     static private bool Beats(StockItem a, StockItem b) : IReportable
     {
-        return a.Price > b.Price;
+        if (a.ExtendedValue() != b.ExtendedValue())
+return a.ExtendedValue() > b.ExtendedValue();
+return string.Compare(a.Name, b.Name, StringComparison.Ordinal) < 0;
     }
 
     public string ReportLine()

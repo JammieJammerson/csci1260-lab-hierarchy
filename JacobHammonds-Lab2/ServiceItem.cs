@@ -4,11 +4,12 @@ public class ServiceItem : StockItem, IDiscountable
 {
     private double laborHours;
 
-    public double LaborHours { get; }
+    public double LaborHours { get { return laborHours; } }
 
-    public bool IsOnSale : IDiscountable { get; }
+    public bool IsOnSale { get; private set; }
 
-    public ServiceItem(string sku, string name, decimal unitPrice, int quantityOnHand, double laborHours) : base(sku, name, unitPrice, quantityOnHand)
+    public ServiceItem(string sku, string name, decimal unitPrice, int quantityOnHand, double laborHours)
+        : base(sku, name, unitPrice, quantityOnHand)
     {
         this.laborHours = laborHours;
     }
@@ -24,18 +25,21 @@ public class ServiceItem : StockItem, IDiscountable
         {
             IsOnSale = true;
         }
+        return 0m;
     }
 
-    public decimal SalePrice() : IDiscountable
+    public decimal SalePrice()
     {
+        // Use base.UnitPrice (or UnitPrice) depending on how StockItem exposes it.
+        decimal price = base.UnitPrice;
         if (IsOnSale)
         {
-            return UnitPrice * 0.85m;
+            return price * 0.85m;
         }
         else
         {
-            return UnitPrice;
-        }
+            return price;
+            }
     }
 
     public override string Describe()
